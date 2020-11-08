@@ -1,6 +1,5 @@
-package ru.kpfu.itis.tasks.task_I;
-
 import java.util.Date;
+import java.util.Objects;
 
 public class PoweredDevice {
     protected final Date PRODACTIONDATE;
@@ -16,19 +15,15 @@ public class PoweredDevice {
         this.isOn = isOn;
     }
 
-    /*public PoweredDevice(Date PRODACTIONDATE, String color, double COST) {
-        this(PRODACTIONDATE, color, COST, false);
-    }*/
+    public void onOff () {
+        this.isOn = !isOn;
+    }
 
     public boolean getIsOn() {
         return this.isOn;
     }
 
-    public void onOff () {
-        this.isOn = !isOn;
-    }
-
-    public boolean getProdactionDAte() {
+    public Date getProdactionDAte() {
         return this.PRODACTIONDATE;
     }
 
@@ -52,25 +47,22 @@ public class PoweredDevice {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        if (this.PRODACTIONDATE == obj.PRODACTIONDATE &&
-            this.color == obj.color &&
-            this.COST == obj.COST) {
-            return true;
-        }
-
+        PoweredDevice object = (PoweredDevice) obj;
+        return  this.PRODACTIONDATE != null &&
+                this.PRODACTIONDATE.equals(object.PRODACTIONDATE) &&
+                this.color != null &&
+                this.color.equals(object.color) &&
+                this.COST == object.COST;
     }
 
     @Override
     public int hashCode() {
-        int result = Object.hash(PRODACTIONDATE, color, COST);
-        if (getIsOn) {
-            result += 1;
-        }
-        return result;
+        return Objects.hash(super.hashCode(), PRODACTIONDATE, color, COST, isOn);
     }
 
     @Override
     public String toString() {
-        return this.color + "device is " + (this.isOn) ? "on" : "off";
+        String str = (this.isOn) ? "on" : "off";
+        return this.color + " device is " + str;
     }
 }

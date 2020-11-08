@@ -1,13 +1,12 @@
-package ru.kpfu.itis.tasks.task_I;
-
 import java.util.Date;
+import java.util.Objects;
 
 public class Printer extends PoweredDevice {
     protected int ramSize;
     protected final Model MODEL;
     protected String type; //laser or струйный or... 
 
-    public Printer(Data PRODACTIONDATE, String color, double COST,
+    public Printer(Date PRODACTIONDATE, String color, double COST,
         boolean isOn, Model MODEL, String type, int ramSize) {
         super(PRODACTIONDATE, color, COST, isOn);
         this.MODEL = MODEL;
@@ -35,7 +34,7 @@ public class Printer extends PoweredDevice {
         this.type = type;
     }
 
-    public String getRamSize() {
+    public int getRamSize() {
         return this.ramSize;
     }
 
@@ -43,7 +42,7 @@ public class Printer extends PoweredDevice {
         this.ramSize = ramSize;
     }
 
-    public boolean getProdactionDAte() {
+    public Date getProdactionDAte() {
         return this.PRODACTIONDATE;
     }
 
@@ -67,26 +66,27 @@ public class Printer extends PoweredDevice {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        if (this.PRODACTIONDATE == obj.PRODACTIONDATE &&
-            this.color == obj.color &&
-            this.COST == obj.COST &&
-            this.MODEL.equals(MODEL) &&
-            this.type = type &&
-            this.ramSize = ramSize) {
-            return true;
-        }
+        Printer object = (Printer) obj;
+        return  this.PRODACTIONDATE != null &&
+                this.PRODACTIONDATE.equals(object.PRODACTIONDATE) &&
+                this.color != null &&
+                this.color.equals(object.color) &&
+                this.COST == object.COST &&
+                this.MODEL != null &&
+                this.MODEL.equals(object.MODEL) &&
+                this.type != null &&
+                this.type.equals(object.type) &&
+                this.ramSize == object.ramSize;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + Object.hash(type, ramSize);
-        result = 31 * result + MODEL.hashCode();
-        return result;
+        return Objects.hash(super.hashCode(), MODEL.hashCode(), type, ramSize);
     }
 
     @Override
     public String toString() {
-        return this.type + " " + this.color + "printer is " + (this.isOn) ? "on" : "off";
+        String str = (this.isOn) ? "on" : "off";
+        return this.type + " " + this.color + " printer is " + str;
     }
 }

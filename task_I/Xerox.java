@@ -1,92 +1,47 @@
-package ru.kpfu.itis.tasks.task_I;
-
 import java.util.Date;
+import java.util.Objects;
 
 public class Xerox extends Printer {
+    private boolean connectByWifi; //есть ли такая возможность?
 
-    public Xerox(Data PRODACTIONDATE, String color, double COST,
-        boolean isOn, Model MODEL, String type, int ramSize) {
+    public Xerox(Date PRODACTIONDATE, String color, double COST,
+        boolean isOn, Model MODEL, String type, int ramSize, boolean connectByWifi) {
         super(PRODACTIONDATE, color, COST, isOn, MODEL, type, ramSize);
+        this.connectByWifi = connectByWifi;
     }
 
     public void xeroxPaper() {
         this.scanPaper();
-        this.print();
+        this.print(" ");
     }
 
     public void scanPaper() {
         // System.out.println("Scan paper succesfully");
     }
 
-    public void print (String str) {
-        System.out.print(str);
+
+    public boolean isConnectByWifi() {
+        return connectByWifi;
     }
 
-    public boolean getIsOn() {
-        return this.isOn;
-    }
-
-    public void onOff () {
-        this.isOn = !isOn;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getRamSize() {
-        return this.ramSize;
-    }
-
-    public void setRamSize(int ramSize) {
-        this.ramSize = ramSize;
-    }
-
-    public boolean getProdactionDAte() {
-        return this.PRODACTIONDATE;
-    }
-
-    public String getColor() {
-        return this.color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public double getCost() {
-        return this.COST;
+    public void setConnectByWifi(boolean connectByWifi) {
+        this.connectByWifi = connectByWifi;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
-        if (this.PRODACTIONDATE == obj.PRODACTIONDATE &&
-            this.color == obj.color &&
-            this.COST == obj.COST &&
-            this.MODEL.equals(MODEL) &&
-            this.type = type &&
-            this.ramSize = ramSize) {
-            return true;
-        }
+        Xerox object = (Xerox) obj;
+        return super.equals(obj) && this.connectByWifi == object.connectByWifi;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(super.hashCode(), this.connectByWifi);
     }
 
     @Override
     public String toString() {
-        return this.type + " " + this.color + "xerox is " + (this.isOn) ? "on" : "off";
+        String str = (this.isOn) ? "on" : "off";
+        return this.type + " " + this.color + " xerox is " + str;
     }
 }
